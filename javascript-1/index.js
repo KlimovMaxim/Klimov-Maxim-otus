@@ -1,15 +1,16 @@
 function sum(a) {
 
-  var currentSum = a;
+  let currentSum = a;
 
   function f(b) {
-    currentSum += b;
+    if (b !== null){
+    currentSum += b;}
     return f;
   }
 
   f.toString = function() {
     return currentSum;
   };
-
+  
   return f;
 }
