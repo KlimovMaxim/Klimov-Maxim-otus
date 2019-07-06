@@ -1,17 +1,12 @@
-function sum(a) {
-  let currentSum = a;
+const sum = (a) => {
+    let currentSum = a;
 
-  function f(b) {
-    if (b == undefined) {
-      currentSum = currentSum;
-    }
-    else { currentSum += b; }
+    const f = (b) => {
+        if (b !== undefined) { currentSum += b; }
+        return f;
+    };
+
+    f.toString = () => currentSum;
+
     return f;
-  }
-
-  f.toString = function () {
-    return currentSum;
-  };
-
-  return f;
-}
+};
