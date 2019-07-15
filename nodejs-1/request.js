@@ -13,7 +13,7 @@ const options = {
   }
 }
 
-const requestSend = (resolve,reject) => {
+const requestSend = (resolve, reject) => {
   const req = http.request(options, (res) => {
     console.log(`Статус: ${res.statusCode}`);
     console.log(`Заголовок: ${JSON.stringify(res.headers)}`);
@@ -41,26 +41,26 @@ const main = () => {
   console.log(process.argv);
   const n = parseInt(process.argv[2]);
   const typeSend = process.argv[3];
- 
+
 
 
   if (typeSend === 'parallel') {
     let propises = [];
     for (let index = 0; index < n; index++) {
-      propises.push(new Promise((resolve,reject) => requestSend(resolve,reject)))
+      propises.push(new Promise((resolve, reject) => requestSend(resolve, reject)))
     }
 
     Promise.all(propises)
       .then(console.log('Все запросы отправлены паралельно'));
   }
-   else if (typeSend === 'serial')
-  {
-    let prom = new Promise((resolve,reject) => requestSend(resolve,reject))
-    for (let index = 0; index < n; index++) {
-      prom.then(prom = new Promise((resolve,reject) => requestSend(resolve,reject)));
-    }
+  else if (typeSend === 'serial') {
+    console.log('Все запросы отправляем последовательно');
 
-    console.log('Все запросы отправлены последовательно')
+      (async () => {
+        for (let index = 0; index < n; index++) {
+          await new Promise((resolve, reject) => requestSend(resolve, reject));
+        }
+      })();
   }
 }
 
