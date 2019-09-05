@@ -5,7 +5,7 @@ function getPath(element) {
 
     let css_selector = "";
 
-    if (!node) return;
+    if (!element) return;
 
     if (element instanceof HTMLBodyElement) {
         return "body";
