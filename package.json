@@ -26,5 +26,8 @@
   },
   "keywords": [
     "react"
-  ]
+  ],
+  "dependencies": {
+    "commander": "^3.0.1"
+  }
 }
