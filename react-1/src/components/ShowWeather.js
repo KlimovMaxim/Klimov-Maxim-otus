@@ -3,11 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import CityWeather from './CityWeather'
-import WbSunnyIcon from '@material-ui/icons/WbSunny';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
-import WbCloudyIcon from '@material-ui/icons/WbCloudy';
-import AcUnitIcon from '@material-ui/icons/AcUnit';
 
+import mock from '../store/mocks/CityWether.json'
+ 
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,17 +17,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function ShowWeather() {
   const classes = useStyles();
+ 
 
   return (
     <List className={classes.root}>
-        <CityWeather City='Москва' Temp='+25' Icon={<BeachAccessIcon />} />
+     { 
+       mock.map(obj => {
+        return(
+        <>
+        <CityWeather key={obj.ID} City={obj.City} Temp={obj.Temp} Icon={obj.Icon} />
         <Divider variant="inset" component="li" />
-        <CityWeather City='Питер' Temp='+15' Icon={<WbCloudyIcon />} />
-        <Divider variant="inset" component="li" />
-        <CityWeather City='Сочи' Temp='+35' Icon={<WbSunnyIcon />} />
-        <Divider variant="inset" component="li" />
-        <CityWeather City='Лабытнанги' Temp='-35' Icon={<AcUnitIcon />} />
-        <Divider variant="inset" component="li" />
+        </>)
+        })
+      }
     </List>
   );
 }
