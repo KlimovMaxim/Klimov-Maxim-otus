@@ -1,0 +1,5 @@
+export const ADD_CITY = 'ADD_CITY'
+export const DELETE_CITY = 'DELETE_CITY'
+export const EDIT_CITY = 'EDIT_CITY'
+export const SHOW_CITY_WETHER = 'SHOW_CITY_WETHER'
+export const SHOW_ALL_CITY_WETHER = 'SHOW_ALL_CITY_WETHER'
