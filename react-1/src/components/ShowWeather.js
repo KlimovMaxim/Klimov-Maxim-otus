@@ -4,6 +4,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import CityWeather from './CityWeather'
 
+//TODO убрать загрузку из JSON, тянуть из стора. и подключить API
 import mock from '../store/mocks/CityWether.json'
  
 

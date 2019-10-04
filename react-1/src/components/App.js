@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import AddCity from './AddCity';
+import AddCityContr from '../containers/AddCityContr';
 import ShowWeather from './ShowWeather';
 
 
@@ -14,7 +14,7 @@ export default class App extends React.Component {
   return (
     <div className="App">
       <header className="App-header">
-        <AddCity/>
+        <AddCityContr/>
         
         <ShowWeather/>
 
