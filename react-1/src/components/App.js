@@ -1,26 +1,25 @@
 import React from 'react';
-import './App.css';
-import AddCityContr from '../containers/AddCityContr';
-import ShowWeather from './ShowWeather';
+import * as reducers from '../store/reducers';
+import { createStore, combineReducers, applyMiddleware , compose} from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './Routes';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(combineReducers(reducers), /* preloadedState, */ composeEnhancers(
+    applyMiddleware(ReduxThunk)
+  ));
 
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = { };
-  }
-
   render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <AddCityContr/>
-        
-        <ShowWeather/>
-
-      </header>
-     
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Routes />
+      </Router>
+    </Provider>
   );
 }
 }

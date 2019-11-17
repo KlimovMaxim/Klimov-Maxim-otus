@@ -1,13 +1,14 @@
-import {UPDATE_CITYS_LIST} from '../../constants/ActionTypes'
-import { cityList } from '../../api/cityList'
-  
-  const initialState = []
+import {UPDATE_CITYS_LIST,LOAD_CITY_WEATHER} from '../../constants/ActionTypes'
+
+  const initialState = {loadedData: null, cityList: null};
  
-  
   export default function wether(state = initialState, action) {
     switch (action.type) {
         case UPDATE_CITYS_LIST:
-          return [...state, {citys: action.cityList}];
+          return  {...state, cityList: action.cityList};
+         case LOAD_CITY_WEATHER:
+              console.log(action);
+             return {...state, loadedData: action.weather};
       // case ADD_CITY:
       //   return [
       //     ...state,
