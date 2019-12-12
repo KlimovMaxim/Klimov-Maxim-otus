@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Menu from './Menu';
 
 import Main from './Main';
-import CityWeather from './CityWeather';
+import CityWeather from '../containers/CityWeatherContr';
 //import City from 'City';
 
 const menu = [
@@ -12,11 +12,14 @@ const menu = [
     link: '/home'
   },
   {
-    title: 'City #1',
-    link: '/city/1'
+    title: 'Москва',
+    link: '/city/524901'
   },
-
-
+  {
+    title: 'Сочи',
+    link: '/city/491422'
+  }
+  
 ];
 
 const Routes = () => {
@@ -29,7 +32,11 @@ const Routes = () => {
           <Route exact path='/'>
             <Redirect to='/home'/>
           </Route>
-          <Route exact path='/city/:id' component={CityWeather}/>
+          <Route exact path='/city' component={CityWeather}/>
+          <Route exact path='/city/:id' render={({match}) => {
+           return (<CityWeather Value={match.params.id}/>)
+          }
+          }/>
         </Switch>
       </div>
     </div>

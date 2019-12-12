@@ -4,75 +4,68 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import api from '../api/weather';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
-/*import WbSunnyIcon from '@material-ui/icons/WbSunny';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
-import WbCloudyIcon from '@material-ui/icons/WbCloudy';
-import AcUnitIcon from '@material-ui/icons/AcUnit';
-*/
 
 export default class CityWeather extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    console.log(props);
+    this.state = { loading: true};
+    // console.log(props);
   }
+
 
   componentDidMount() {
-    if (this.props.loadedData && this.props.loadedData.find(m => m.id === this.props.Value ))
-    {
-     console.log('Нашли id:'+this.props.Value+'('+this.props.City+')');
+
+
+    if (this.props.loadedData && this.props.loadedData.find(m => m.id === this.props.Value)) {
+      console.log('Нашли id:' + this.props.Value);
+      const data = this.props.loadedData.find(m => m.id === this.props.Value);
+      console.log(data);
+
+      if (this.props.City)
+        {this.setState({ loading: false, weather: data, cityName: this.props.City});}
+      else
+        {this.setState({ loading: false, weather: data, cityName:  data[0].name});}
     }
-    else
-    {
-     console.log('Не нашли id:'+this.props.Value+'('+this.props.City+')');
-      api.get(this.props.Value,this.props.loadCityWeAther);
+    else {
+      console.log('Не нашли id:' + this.props.Value);
+
+      let loadData = (data) => {
+        this.setState({ loading: false, weather: data, cityName: data[0].name});
+        this.props.loadCityWeAther(data);
+      };
+
+      api.get(this.props.Value, loadData);
+      this.setState({ loading: true });
     }
   }
-    
-render() {
-// if (Temp == '?')
-// {
-//   data && Temp = data.main.temp
-// }
 
-// switch (Icon) {
-//     case 'Солнечно': Icn = <WbSunnyIcon /> 
-//     break
-//     case 'Снег':  Icn = <AcUnitIcon />
-//     break
-//     case 'Облачно': Icn = <WbCloudyIcon />
-//     break
-//     case 'Дождь': Icn = <BeachAccessIcon />
-//     break
-//     case 'Неизвестно': 
-//     break
-//     default: Icn = <></>
-//  }
-let Icn
-let Temp 
-//console.log(this.state)
+  render() {
 
-// if (this.state && this.state.weather[0].icon) {
-//     Icn = <img src={`https://openweathermap.org/img/w/${this.state.weather[0].icon}.png` }/>
-//     Temp = this.state.main.temp
-//   } 
-// else {
-//     Icn = <></>
-//     Temp = '?'
-//   }
+    let Icn;
+    let Temp;
 
+    if (this.state.loading) {
+      Icn = <HourglassEmptyIcon />
+      Temp = 'Loading...'
+    }
+    else 
+    {
+      Icn = <img alt={this.state.weather[0].weather[0].description} src={`https://openweathermap.org/img/w/${this.state.weather[0].weather[0].icon}.png`} />
+      Temp = this.state.weather[0].main.temp
+    };
 
-  return (
-     
+    return (
+
       <ListItem>
-      <ListItemAvatar>
-        <Avatar>
-        {Icn}
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary={this.props.City} secondary={Temp}  />
-    </ListItem>
-       );
-}
+        <ListItemAvatar>
+          <Avatar>
+            {Icn}
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={this.state.cityName} secondary={Temp+' ℃'} />
+      </ListItem>
+    );
+  }
 }

@@ -8,7 +8,11 @@ import {UPDATE_CITYS_LIST,LOAD_CITY_WEATHER} from '../../constants/ActionTypes'
           return  {...state, cityList: action.cityList};
          case LOAD_CITY_WEATHER:
               console.log(action);
-             return {...state, loadedData: action.weather};
+              if (state.loadedData)
+                return {...state, loadedData:state.loadedData.concat(action.weather)};
+              else
+                return {...state, loadedData: [action.weather]};
+            // return {...state, loadedData: action.weather};
       // case ADD_CITY:
       //   return [
       //     ...state,
